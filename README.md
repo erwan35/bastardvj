@@ -8,7 +8,7 @@ ideas.
 It was quite stable and used during live sessions without problems and
 was working smoothly on a celeron 1.4ghz.
 
-![Screenshot](/doc/screenshot.png)
+![Screenshot](/screenshot.png)
 
 # What's needed :
 - Ubuntu 18.04 (but might work elsewhere for sure)
