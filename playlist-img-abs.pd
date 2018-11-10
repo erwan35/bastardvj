@@ -1,0 +1,165 @@
+#N canvas 1281 228 721 540 10;
+#X obj 70 39 pdp_spigot;
+#X obj 141 115 tgl 15 0 empty aging empty 0 -6 0 8 -260818 -1 -1 0
+1;
+#N canvas 354 25 837 800 img2 0;
+#X obj 488 441 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0
+1;
+#X msg 488 466 thread \$1;
+#X floatatom 488 554 5 0 0 0 - - -;
+#X obj 488 525 route pdp_drop;
+#X floatatom 345 279 5 0 0 0 - - -;
+#X text 345 261 X Offset;
+#X floatatom 403 279 5 0 0 0 - - -;
+#X text 403 261 Y Offset;
+#X text 345 615 pdp_imgloader : load an image and blend it with a video
+;
+#X msg 187 361 clear;
+#X text 25 263 load <name> <x offset> <y offset>;
+#X text 26 250 Load an image ( types supported by imlib2 );
+#X text 491 364 Unhide <index>;
+#X text 439 340 Hide <x1> <y1> <x2> <y2> <x3> <y3>;
+#X text 439 329 Hide a triangular zone :;
+#X text 491 353 Unhide a triangular zone :;
+#X obj 191 401 pdp_imgloader;
+#X text 438 399 Same as hide but with percentages;
+#X msg 419 384 rawhide 0 0.823 0.15 0.234 0.892 0.678;
+#X obj 292 401 r rawhide;
+#X msg 739 734 estirar \$1;
+#X obj 754 695 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0
+1;
+#X msg 739 734 estirar \$1;
+#X obj 754 695 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0
+1;
+#X obj 22 394 cnv 15 150 180 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X msg 27 484 operation add;
+#X msg 27 444 operation substract;
+#X msg 27 463 operation reshade;
+#X msg 27 424 operation copy;
+#X obj 28 528 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
+;
+#X obj 17 287 cnv 15 160 100 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X msg 34 335 quality 0;
+#X msg 34 355 quality 1;
+#X text 23 403 with quality mode;
+#X text 23 391 these only work;
+#X text 19 292 quality sets a slower;
+#X text 21 315 more possibilities;
+#X text 20 303 draw method with;
+#X text 625 305 (only if quality = 0 );
+#X obj 488 493 pdp_control;
+#X text 344 627 written by Yves Degoyon ( ydegoyon@free.fr ) \, improved
+by Pablo Martin Caedes ( caedes@sindominio.net );
+#X msg 48 527 fit \$1;
+#X text 24 499 operation: blend;
+#X text 24 511 mode for the image;
+#X text 23 555 to the video size;
+#X text 23 545 fit: fit the image;
+#X obj 230 470 outlet;
+#X obj 29 179 inlet;
+#X obj 395 -731 loadbang;
+#X msg 395 -712 location /home/erwan/Videos;
+#X msg 184 323 load \$1 0 0;
+#X msg 418 359 unhide 0;
+#X msg 433 306 unhide 0 23 250 25 67 235;
+#X obj 119 169 inlet;
+#X obj 561 197 inlet;
+#X connect 0 0 1 0;
+#X connect 1 0 39 0;
+#X connect 3 0 2 0;
+#X connect 4 0 16 1;
+#X connect 6 0 16 2;
+#X connect 9 0 16 0;
+#X connect 16 0 46 0;
+#X connect 18 0 16 0;
+#X connect 19 0 16 0;
+#X connect 21 0 20 0;
+#X connect 23 0 22 0;
+#X connect 25 0 16 0;
+#X connect 26 0 16 0;
+#X connect 27 0 16 0;
+#X connect 28 0 16 0;
+#X connect 29 0 41 0;
+#X connect 31 0 16 0;
+#X connect 32 0 16 0;
+#X connect 39 0 3 0;
+#X connect 41 0 16 0;
+#X connect 47 0 16 0;
+#X connect 48 0 49 0;
+#X connect 50 0 16 0;
+#X connect 51 0 16 0;
+#X connect 52 0 16 0;
+#X connect 53 0 50 0;
+#X connect 54 0 16 3;
+#X restore 38 221 pd img2;
+#X obj 269 119 hsl 64 10 0 1 0 0 empty empty Image_Blending -2 -6 0
+10 -260818 -1 -1 0 1;
+#X obj 105 148 playlist all 400 150 {courier 12 normal} #293c43 navajowhite4
+white red;
+#X obj 111 5 inlet;
+#X obj 97 452 outlet;
+#X obj 564 18 inlet;
+#X obj 346 119 tgl 10 0 empty aging empty 0 -6 0 8 -250685 -1 -1 0
+1;
+#X floatatom 564 55 5 0 0 0 - - -;
+#X obj 563 36 spigot;
+#X text 333 129 Sound;
+#X msg 609 54 0;
+#X obj 608 161 / 45;
+#N canvas 87 525 450 301 randomvid 0;
+#X floatatom -87 -92 5 0 0 0 - - -;
+#X obj -135 -117 random 1000;
+#X floatatom -108 -169 5 0 0 0 - - -;
+#X msg -85 -60 seek \$1;
+#X obj -83 -7 outlet;
+#X obj -13 -197 inlet;
+#X obj -143 -197 inlet;
+#X obj -64 -171 * 1000;
+#X obj -136 -142 metro 10000;
+#X obj 84 -150 loadbang;
+#X msg 49 -112 10;
+#X connect 0 0 3 0;
+#X connect 1 0 0 0;
+#X connect 2 0 8 1;
+#X connect 3 0 4 0;
+#X connect 5 0 7 0;
+#X connect 6 0 8 0;
+#X connect 7 0 2 0;
+#X connect 8 0 1 0;
+#X connect 9 0 10 0;
+#X connect 10 0 7 0;
+#X restore 170 -28 pd randomvid;
+#X obj 371 116 tgl 15 0 empty auto1 empty 0 -6 0 8 -262144 -1 -1 0
+1;
+#X obj 397 116 hsl 64 15 10 0 0 0 empty empty empty -2 -6 0 8 -195568
+-1 -1 0 1;
+#X msg 411 63 location ..;
+#X obj 202 116 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
+-1;
+#X text 223 116 Back;
+#X text 165 115 Go;
+#X obj 247 23 inlet;
+#X text 465 114 Random;
+#X connect 0 0 6 0;
+#X connect 0 1 2 0;
+#X connect 1 0 0 1;
+#X connect 2 0 6 0;
+#X connect 3 0 2 2;
+#X connect 4 0 2 1;
+#X connect 5 0 0 0;
+#X connect 7 0 10 0;
+#X connect 8 0 10 1;
+#X connect 8 0 12 0;
+#X connect 9 0 13 0;
+#X connect 10 0 9 0;
+#X connect 12 0 3 0;
+#X connect 13 0 3 0;
+#X connect 14 0 4 0;
+#X connect 15 0 14 0;
+#X connect 16 0 14 1;
+#X connect 17 0 4 0;
+#X connect 18 0 17 0;
+#X connect 21 0 4 0;
+#X coords 0 -1 1 1 410 210 1 100 100;

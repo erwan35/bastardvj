@@ -1,0 +1,431 @@
+#N canvas 385 83 874 845 10;
+#X obj 0 0 cnv 15 900 1000 empty empty empty 20 12 0 14 -128992 -66577
+0;
+#X obj 24 20 playlist-abs;
+#X msg 43 642 dim 320 240;
+#X msg 43 664 dim 640 480;
+#X msg 43 709 dim 1024 768;
+#X msg 43 687 dim 800 600;
+#X obj 154 805 pdp_mix;
+#X obj 444 20 playlist-abs;
+#X obj 338 295 hsl 200 25 0 1 0 0 empty empty MIX_Video1/Video2 -2
+-6 0 8 -195568 -1 -1 0 1;
+#X obj 388 321 s mainmixright;
+#X obj 154 788 r mainmixright;
+#X obj 24 551 s mainmixleft;
+#X obj 154 771 r mainmixmiddle;
+#X obj 154 754 r mainmixleft;
+#X obj 443 766 s mainmixmiddle;
+#X obj 24 363 fxpidip-abs;
+#X obj 443 347 playlist-img-abs;
+#X obj 401 346 r s;
+#X obj 830 330 r s;
+#X floatatom 325 556 5 0 0 0 - - -, f 5;
+#X obj 325 581 s s;
+#N canvas 0 0 1128 878 bonk 0;
+#X obj 260 569 print;
+#X floatatom 254 491 0 0 0 0 - - -;
+#X obj 260 539 spigot;
+#X msg 254 461 0;
+#X msg 291 461 1;
+#X msg 382 417 bang;
+#X obj 369 508 bonk~;
+#X msg 382 234 learn 1;
+#X msg 382 294 learn 0;
+#X msg 377 476 print;
+#X text 260 587 cooked;
+#X obj 197 569 print;
+#X floatatom 191 491 0 0 0 0 - - -;
+#X obj 197 539 spigot;
+#X msg 191 461 0;
+#X msg 222 461 1;
+#X text 197 587 raw;
+#X obj 394 539 s bonk-cooked;
+#X msg 382 264 learn 10;
+#X msg 382 324 forget;
+#X msg 382 354 write templates.txt;
+#X msg 382 384 read templates.txt;
+#X text 199 438 enable printout;
+#X text 473 108 Set low and high thresholds. Signal growth must exceed
+the high one and then fall to the low one to make an attack.;
+#X text 473 141 Minimum velocity to output (quieter notes are ignored.)
+;
+#X msg 382 170 mask 4 0.7;
+#X msg 382 204 debounce 0;
+#X text 472 209 Minimum time (msec) between attacks;
+#X text 472 160 Describes how energy in each frequency band masks later
+energy in the band. Here the masking is total for 4 analysis periods
+and then drops by 0.7 each period.;
+#X text 470 234 Forget all templates and start learning new ones. The
+argument gives the number of times you will hit each instrument (10
+recommended.) Turn on the output volume above for audible feedback
+as you train Bonk. "Learn 0" exits learn mode.;
+#X text 470 318 Forget the last template. In Learn mode \, use "forget"
+to erase and record over a template.;
+#X text 535 358 Write templates to a file in text-editable format.
+;
+#X text 536 388 Read templates from a file.;
+#X text 478 483 Print out all settings and templates.;
+#X msg 382 140 minvel 10;
+#X text 478 416 Poll the current spectrum via "raw" outlet \, You can
+set a very high threshold if you don't want attacks mixed in.;
+#X msg 574 507 print;
+#X msg 377 446 debug 0;
+#X text 478 456 turn debugging on or off.;
+#X msg 382 110 thresh 6 50;
+#X obj 195 168 inlet~;
+#X obj 255 168 inlet~;
+#X obj 264 651 outlet;
+#X connect 1 0 2 1;
+#X connect 2 0 0 0;
+#X connect 3 0 1 0;
+#X connect 4 0 1 0;
+#X connect 5 0 6 0;
+#X connect 6 0 13 0;
+#X connect 6 0 42 0;
+#X connect 6 1 2 0;
+#X connect 6 1 17 0;
+#X connect 7 0 6 0;
+#X connect 8 0 6 0;
+#X connect 9 0 6 0;
+#X connect 12 0 13 1;
+#X connect 13 0 11 0;
+#X connect 14 0 12 0;
+#X connect 15 0 12 0;
+#X connect 18 0 6 0;
+#X connect 19 0 6 0;
+#X connect 20 0 6 0;
+#X connect 21 0 6 0;
+#X connect 25 0 6 0;
+#X connect 26 0 6 0;
+#X connect 34 0 6 0;
+#X connect 37 0 6 0;
+#X connect 39 0 6 0;
+#X connect 40 0 6 0;
+#X connect 41 0 6 0;
+#X restore 354 582 pd bonk;
+#X obj 366 554 adc~;
+#X floatatom 244 730 5 0 0 0 - - -, f 5;
+#X obj 244 713 pdp_rec~;
+#X msg 243 642 open /tmp/output.mov;
+#X msg 242 664 start;
+#X msg 243 686 stop;
+#X obj 284 685 pdp_spigot;
+#X obj 344 673 tgl 12 0 empty empty empty 0 -6 0 8 -260818 -1 -1 0
+1;
+#N canvas 97 455 450 300 scope 0;
+#X obj 142 169 pdp_scope~;
+#X obj 69 40 metro 40;
+#X floatatom 129 18 5 0 0 0 - - -, f 5;
+#X msg 237 127 type grey;
+#X msg 237 105 type yv12;
+#X msg 237 153 dim 320 240;
+#X obj 163 119 osc~;
+#X text 237 62 a very simple oscilloscope;
+#X text 333 128 set output image type and dimensions;
+#X obj 60 8 inlet;
+#X obj 85 197 outlet;
+#X floatatom 189 58 5 0 0 0 - - -, f 5;
+#X obj 261 27 inlet;
+#X connect 0 0 10 0;
+#X connect 1 0 0 0;
+#X connect 2 0 1 1;
+#X connect 3 0 0 0;
+#X connect 4 0 0 0;
+#X connect 5 0 0 0;
+#X connect 6 0 0 0;
+#X connect 9 0 1 0;
+#X connect 11 0 6 0;
+#X connect 12 0 11 0;
+#X restore 527 905 pd scope;
+#X obj 525 927 pdp_mix;
+#X obj 596 903 hsl 15 15 0 1 0 0 empty empty mix -2 -6 0 8 -260818
+-1 -1 0 1;
+#X obj 526 889 tgl 12 0 empty empty empty 0 -6 0 8 -260818 -1 -1 0
+1;
+#X obj 547 890 hsl 30 10 0 100 0 0 empty empty Osc -2 -6 0 8 -260818
+-1 -1 0 1;
+#N canvas 98 202 450 300 (subpatch) 0;
+#N canvas 290 270 657 657 v4l 0;
+#X text 348 128 you can choose the input device using the 'open' message.
+the default is /dev/video0;
+#X msg 210 181 close;
+#X text 349 182 closes the video port;
+#X msg 210 207 type yv12;
+#X msg 210 231 type grey;
+#X text 349 210 type sets the ouput image package type. currently only
+yv12 (luma/chroma color) and greyscale are supported.;
+#X msg 211 260 dim 320 240;
+#X msg 211 283 dim 640 480;
+#X msg 212 336 channel \$1;
+#X floatatom 212 312 5 0 0 0 - - -, f 5;
+#X floatatom 210 459 5 0 0 0 - - -, f 5;
+#X msg 210 483 freq \$1;
+#X floatatom 271 459 5 0 0 0 - - -, f 5;
+#X msg 271 483 freqMHz \$1;
+#X text 346 459 sets the v4l tuner frequency (in v4l units and MHz)
+;
+#X text 348 526 creation arguments: <input device> <capture format>
+;
+#X text 347 620 i.e. if you get weird colours \, try;
+#X obj 601 620 pdp_v4l /dev/video RGB24;
+#X text 206 14 pdp_v4l grabs video from the video4linux device. it
+sends out the most recently grabbed frame whenever a bang message is
+received \, and will then discard that frame (it will be sent out on
+time at most). the output framerate is limited by the device only.
+;
+#X text 206 89 (to make sure you receive every frame with little jitter
+\, poll pdp_v4l with a high rate metronome);
+#X text 348 554 capture format can be one of "auto" \, "YUV420P" \,
+"YUV422" \, "RGB24" or "RGB32". for most cards autodetect (default)
+should work. if not \, add the desired capture format argument when
+you create a pdp_v4l object.;
+#X obj 107 527 pdp_v4l;
+#X text 349 338 sets the v4l channel (like tuner \, composite \, svideo
+\, ...);
+#X msg 212 366 norm PAL;
+#X msg 211 410 norm SECAM;
+#X msg 211 388 norm NTSC;
+#X msg 211 431 norm AUTO;
+#X text 349 377 sets the video norm;
+#X obj 122 607 outlet;
+#X msg 141 44 stop;
+#X msg 19 48 bang;
+#X obj 142 21 inlet;
+#X obj 19 27 inlet;
+#X obj 18 73 metro 20;
+#X msg 210 132 open /dev/video0;
+#X connect 1 0 21 0;
+#X connect 3 0 21 0;
+#X connect 4 0 21 0;
+#X connect 6 0 21 0;
+#X connect 7 0 21 0;
+#X connect 8 0 21 0;
+#X connect 9 0 8 0;
+#X connect 10 0 11 0;
+#X connect 11 0 21 0;
+#X connect 12 0 13 0;
+#X connect 13 0 21 0;
+#X connect 21 0 28 0;
+#X connect 23 0 21 0;
+#X connect 24 0 21 0;
+#X connect 25 0 21 0;
+#X connect 26 0 21 0;
+#X connect 29 0 1 0;
+#X connect 29 0 33 0;
+#X connect 30 0 33 0;
+#X connect 30 0 34 0;
+#X connect 31 0 29 0;
+#X connect 32 0 30 0;
+#X connect 33 0 21 0;
+#X connect 34 0 21 0;
+#X restore 14 81 pd v4l;
+#X obj -3 106 pdp_mix;
+#X obj 61 16 hsl 15 15 0 1 0 0 empty empty Webcam -2 -6 0 9 -260818
+-1 -1 0 1;
+#X obj 0 135 outlet;
+#X obj 5 7 bng 8 250 50 0 empty empty empty 0 -6 0 8 -24198 -1 -1;
+#X obj 5 27 bng 8 250 50 0 empty empty empty 0 -6 0 8 -258699 -1 -1
+;
+#X text 16 3 Open;
+#X text 16 23 Close;
+#X obj -37 52 inlet;
+#X connect 0 0 1 1;
+#X connect 1 0 3 0;
+#X connect 2 0 1 2;
+#X connect 4 0 0 0;
+#X connect 5 0 0 1;
+#X connect 8 0 1 0;
+#X coords 0 1 100 -1 110 40 1 0 0;
+#X restore 24 288 graph;
+#X obj 821 560 r s;
+#X obj 443 577 fxpidip-abs;
+#X obj 187 293 cnv 15 100 30 empty empty empty 20 12 0 14 -241291 -66577
+0;
+#X text 200 301 BASTARD VJ;
+#X obj 157 553 cnv 15 150 50 empty empty empty 20 12 0 14 -195568 -66577
+0;
+#X msg 165 568 \; pd dsp 1;
+#X text 233 552 Stop DSP;
+#X text 163 553 Start DSP;
+#X msg 232 568 \; pd dsp 0;
+#N canvas 564 195 424 317 conf 0;
+#X text 78 -144 Left video playlist;
+#X obj 80 -72 s lplay;
+#X msg 80 11 location /home/erwan/r1vj/videos;
+#X text 78 -44 Right video playlist;
+#X obj 80 28 s rplay;
+#X msg 80 111 location /home/erwan/r1vj/images;
+#X obj 80 128 s iplay;
+#X obj 11 -20 loadbang;
+#X msg 80 -125 set location /home/erwan/r1vj/videos;
+#X msg 80 -26 set location /home/erwan/r1vj/videos;
+#X text 78 56 Images playlist;
+#X msg 80 75 set location /home/erwan/r1vj/images;
+#X msg 80 -99 location /home/erwan/r1vj/videos;
+#X connect 2 0 4 0;
+#X connect 5 0 6 0;
+#X connect 7 0 2 0;
+#X connect 7 0 5 0;
+#X connect 7 0 12 0;
+#X connect 8 0 12 0;
+#X connect 9 0 2 0;
+#X connect 11 0 5 0;
+#X connect 12 0 1 0;
+#X restore 162 666 pd conf;
+#X obj 24 3 r lplay;
+#X obj 444 3 r rplay;
+#X obj 620 331 r iplay;
+#X text 94 728 <- pdp_glx or xv;
+#X text 230 643 1;
+#X text 230 665 2;
+#X text 230 687 3;
+#X text 359 671 Enable rec;
+#X text 41 623 Screen resolution;
+#X text 241 623 Record to a file;
+#X obj 553 288 metro 250;
+#X obj 553 308 random 127;
+#X obj 553 327 / 127;
+#X obj 637 293 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0
+1;
+#N canvas 88 130 450 300 (subpatch) 0;
+#N canvas 280 277 657 657 v4l 0;
+#X text 348 128 you can choose the input device using the 'open' message.
+the default is /dev/video0;
+#X msg 210 181 close;
+#X text 349 182 closes the video port;
+#X msg 210 207 type yv12;
+#X msg 210 231 type grey;
+#X text 349 210 type sets the ouput image package type. currently only
+yv12 (luma/chroma color) and greyscale are supported.;
+#X msg 211 260 dim 320 240;
+#X msg 211 283 dim 640 480;
+#X msg 212 336 channel \$1;
+#X floatatom 212 312 5 0 0 0 - - -, f 5;
+#X floatatom 210 459 5 0 0 0 - - -, f 5;
+#X msg 210 483 freq \$1;
+#X floatatom 271 459 5 0 0 0 - - -, f 5;
+#X msg 271 483 freqMHz \$1;
+#X text 346 459 sets the v4l tuner frequency (in v4l units and MHz)
+;
+#X text 348 526 creation arguments: <input device> <capture format>
+;
+#X text 347 620 i.e. if you get weird colours \, try;
+#X obj 601 620 pdp_v4l /dev/video RGB24;
+#X text 206 14 pdp_v4l grabs video from the video4linux device. it
+sends out the most recently grabbed frame whenever a bang message is
+received \, and will then discard that frame (it will be sent out on
+time at most). the output framerate is limited by the device only.
+;
+#X text 206 89 (to make sure you receive every frame with little jitter
+\, poll pdp_v4l with a high rate metronome);
+#X text 348 554 capture format can be one of "auto" \, "YUV420P" \,
+"YUV422" \, "RGB24" or "RGB32". for most cards autodetect (default)
+should work. if not \, add the desired capture format argument when
+you create a pdp_v4l object.;
+#X obj 107 527 pdp_v4l;
+#X text 349 338 sets the v4l channel (like tuner \, composite \, svideo
+\, ...);
+#X msg 212 366 norm PAL;
+#X msg 211 410 norm SECAM;
+#X msg 211 388 norm NTSC;
+#X msg 211 431 norm AUTO;
+#X text 349 377 sets the video norm;
+#X obj 122 607 outlet;
+#X msg 141 44 stop;
+#X msg 19 48 bang;
+#X obj 142 21 inlet;
+#X obj 19 27 inlet;
+#X obj 18 73 metro 20;
+#X msg 210 132 open /dev/video1;
+#X connect 1 0 21 0;
+#X connect 3 0 21 0;
+#X connect 4 0 21 0;
+#X connect 6 0 21 0;
+#X connect 7 0 21 0;
+#X connect 8 0 21 0;
+#X connect 9 0 8 0;
+#X connect 10 0 11 0;
+#X connect 11 0 21 0;
+#X connect 12 0 13 0;
+#X connect 13 0 21 0;
+#X connect 21 0 28 0;
+#X connect 23 0 21 0;
+#X connect 24 0 21 0;
+#X connect 25 0 21 0;
+#X connect 26 0 21 0;
+#X connect 29 0 1 0;
+#X connect 29 0 33 0;
+#X connect 30 0 33 0;
+#X connect 30 0 34 0;
+#X connect 31 0 29 0;
+#X connect 32 0 30 0;
+#X connect 33 0 21 0;
+#X connect 34 0 21 0;
+#X restore 14 81 pd v4l;
+#X obj -3 106 pdp_mix;
+#X obj 61 16 hsl 15 15 0 1 0 0 empty empty Webcam -2 -6 0 9 -260818
+-1 -1 0 1;
+#X obj 0 135 outlet;
+#X obj 5 7 bng 8 250 50 0 empty empty empty 0 -6 0 8 -24198 -1 -1;
+#X obj 5 27 bng 8 250 50 0 empty empty empty 0 -6 0 8 -258699 -1 -1
+;
+#X text 16 3 Open;
+#X text 16 23 Close;
+#X obj -37 52 inlet;
+#X connect 0 0 1 1;
+#X connect 1 0 3 0;
+#X connect 2 0 1 2;
+#X connect 4 0 0 0;
+#X connect 5 0 0 1;
+#X connect 8 0 1 0;
+#X coords 0 1 100 -1 110 40 1 0 0;
+#X restore 744 288 graph;
+#X obj 43 728 pdp_glx;
+#X text 677 785 November 2018;
+#X text 671 770 Bastardvj 0.46;
+#X connect 1 0 35 0;
+#X connect 2 0 61 0;
+#X connect 3 0 61 0;
+#X connect 4 0 61 0;
+#X connect 5 0 61 0;
+#X connect 6 0 28 0;
+#X connect 6 0 61 0;
+#X connect 7 0 60 0;
+#X connect 8 0 9 0;
+#X connect 10 0 6 2;
+#X connect 12 0 6 1;
+#X connect 13 0 6 0;
+#X connect 15 0 11 0;
+#X connect 16 0 37 0;
+#X connect 17 0 15 1;
+#X connect 17 0 15 2;
+#X connect 17 0 15 3;
+#X connect 18 0 16 2;
+#X connect 19 0 20 0;
+#X connect 21 0 19 0;
+#X connect 22 0 21 0;
+#X connect 22 1 21 1;
+#X connect 24 0 23 0;
+#X connect 25 0 24 0;
+#X connect 26 0 24 0;
+#X connect 27 0 24 0;
+#X connect 28 1 24 0;
+#X connect 29 0 28 1;
+#X connect 30 0 31 1;
+#X connect 32 0 31 2;
+#X connect 33 0 30 0;
+#X connect 34 0 30 1;
+#X connect 35 0 15 0;
+#X connect 36 0 37 1;
+#X connect 36 0 37 2;
+#X connect 36 0 37 3;
+#X connect 37 0 14 0;
+#X connect 46 0 1 0;
+#X connect 47 0 7 0;
+#X connect 48 0 16 1;
+#X connect 56 0 57 0;
+#X connect 57 0 58 0;
+#X connect 58 0 9 0;
+#X connect 59 0 56 0;
+#X connect 60 0 16 0;
